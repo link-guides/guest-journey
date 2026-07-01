@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- ============================================================
+     NEUTRAL / WHITE-LABEL META TAGS
+     Swap these + the social image URL when co-branding.
+============================================================ -->
+<title>The complete guest journey, from booking to check-out</title>
+<meta name="description" content="A seamless online guest experience: online registration, identity verification, secure deposits, and built-in compliance — all in one check-in flow." />
+
+<!-- Open Graph / social preview (neutral) -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="The complete guest journey, from booking to check-out" />
+<meta property="og:description" content="Online guest registration, identity verification, secure deposits, and compliance, all built into one check-in flow." />
+<meta property="og:image" content="https://via.placeholder.com/1200x630/f6f4ef/1f2a2e?text=Guest+Journey" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="The complete guest journey, from booking to check-out" />
+<meta name="twitter:description" content="Online guest registration, identity verification, secure deposits, and compliance, all built into one check-in flow." />
+
+<style>
+  /* ============================================================
+     THEME TOKENS
+     Co-brand by changing --accent (and optionally --accent-ink).
+     Everything else is neutral off-white / warm neutral.
+  ============================================================ */
+  :root {
+    --accent:        #2563c9;   /* confident single accent — swap to re-brand */
+    --accent-ink:    #ffffff;   /* text on accent */
+    --accent-soft:   #e7effb;   /* accent-tinted surface */
+
+    --bg:            #faf8f4;   /* warm off-white page background */
+    --bg-alt:        #f2efe9;   /* alternating section surface */
+    --surface:       #ffffff;   /* cards / mockups */
+
+    --ink:           #1f2a2e;   /* primary text */
+    --ink-soft:      #556066;   /* secondary text */
+    --ink-faint:     #8a938f;   /* muted */
+
+    --line:          #e7e2d9;   /* hairline borders */
+
+    --radius-lg:     28px;
+    --radius-md:     18px;
+    --radius-sm:     12px;
+
+    --shadow-soft:   0 18px 50px -22px rgba(31, 42, 46, 0.28);
+    --shadow-card:   0 10px 30px -18px rgba(31, 42, 46, 0.30);
+    --shadow-phone:  0 40px 80px -30px rgba(31, 42, 46, 0.45);
+
+    --maxw:          1120px;
+    --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: var(--font);
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3 {
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.4em;
+    font-weight: 700;
+  }
+
+  p { margin: 0 0 1em; }
+
+  a { color: inherit; }
+
+  img { max-width: 100%; display: block; }
+
+  .wrap {
+    width: 100%;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 14px 26px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+    box-shadow: var(--shadow-card);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  .btn-ghost:hover { background: var(--surface); }
+
+  /* ============================================================
+     HEADER
+  ============================================================ */
+  header.site {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(250, 248, 244, 0.82);
+    backdrop-filter: saturate(160%) blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    max-width: var(--maxw);
+    margin: 0 auto;
+  }
+
+  /* ---------- LOGO SLOT (co-brandable) ----------
+     Replace the .logo-slot contents with an <img> of the
+     partner/client logo. Recommended height ≈ 32px.        -->
+  .logo-slot {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+  }
+  .logo-placeholder {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-size: 1.15rem;
+    color: var(--ink);
+  }
+  .logo-placeholder .mark {
+    width: 30px; height: 30px;
+    border-radius: 9px;
+    background: var(--accent);
+    display: grid; place-items: center;
+    color: var(--accent-ink);
+    font-size: 0.9rem;
+  }
+  .logo-placeholder small {
+    display:block;
+    font-weight: 500;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .doc-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .nav-links { display: none; gap: 26px; font-size: 0.95rem; color: var(--ink-soft); }
+  .nav-links a { text-decoration: none; }
+  .nav-links a:hover { color: var(--ink); }
+
+  @media (min-width: 860px) {
+    .nav-links { display: flex; }
+  }
+
+  /* ============================================================
+     HERO
+  ============================================================ */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 84px 0 72px;
+  }
+  .hero::before {
+    /* soft airy glow, no heavy gradient */
+    content: "";
+    position: absolute;
+    top: -30%; right: -10%;
+    width: 60vw; height: 60vw;
+    max-width: 720px; max-height: 720px;
+    background: radial-gradient(circle at center, var(--accent-soft), transparent 68%);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .hero .wrap { position: relative; z-index: 1; }
+  .hero-grid {
+    display: grid;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (min-width: 940px) {
+    .hero-grid { grid-template-columns: 1.05fr 0.95fr; gap: 56px; }
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 7px 14px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-size: clamp(2.1rem, 5.2vw, 3.5rem);
+  }
+  .hero .subhead {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--ink-soft);
+    max-width: 34ch;
+    margin-bottom: 28px;
+  }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+  .trust-row {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 28px;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+  .trust-row span { display: inline-flex; align-items: center; gap: 8px; }
+  .trust-row .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+
+  /* Hero device cluster */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* ============================================================
+     PHONE MOCKUPS (pure HTML/CSS device frame)
+  ============================================================ */
+  .phone {
+    width: 300px;
+    max-width: 78vw;
+    background: #10171a;
+    border-radius: 42px;
+    padding: 12px;
+    box-shadow: var(--shadow-phone);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .phone::before { /* speaker / notch */
+    content: "";
+    position: absolute;
+    top: 22px; left: 50%;
+    transform: translateX(-50%);
+    width: 110px; height: 26px;
+    background: #10171a;
+    border-radius: 0 0 16px 16px;
+    z-index: 3;
+  }
+  .phone-screen {
+    background: var(--bg);
+    border-radius: 32px;
+    overflow: hidden;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .screen-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 22px 8px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+  .screen-status .sig { display: flex; gap: 4px; align-items: center; }
+  .screen-status .sig i { width: 4px; background: var(--ink-faint); border-radius:2px; display:inline-block; }
+  .screen-status .sig i:nth-child(1){height:6px}
+  .screen-status .sig i:nth-child(2){height:9px}
+  .screen-status .sig i:nth-child(3){height:12px}
+
+  .app-bar {
+    padding: 8px 22px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .app-bar .app-logo {
+    width: 26px; height: 26px; border-radius: 8px;
+    background: var(--accent); color: var(--accent-ink);
+    display:grid; place-items:center; font-size:0.72rem; font-weight:700;
+  }
+  .app-bar .app-title { font-size: 0.82rem; font-weight: 700; }
+  .app-bar .app-title small { display:block; font-weight:500; color: var(--ink-faint); font-size: 0.66rem; }
+
+  .screen-body {
+    padding: 18px 22px;
+    overflow: hidden;
+    flex: 1;
+  }
+  .screen-body h4 { font-size: 1.05rem; margin: 4px 0 4px; }
+  .screen-body .lead { font-size: 0.78rem; color: var(--ink-soft); margin-bottom: 16px; }
+
+  /* progress steps */
+  .steps { display:flex; gap:6px; margin-bottom: 18px; }
+  .steps i {
+    height: 5px; border-radius: 3px; flex: 1;
+    background: var(--line);
+  }
+  .steps i.on { background: var(--accent); }
+
+  /* form field */
+  .field { margin-bottom: 12px; }
+  .field label {
+    display:block; font-size: 0.68rem; font-weight: 600;
+    color: var(--ink-soft); margin-bottom: 5px; letter-spacing: 0.02em;
+  }
+  .field .input {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.8rem;
+    color: var(--ink);
+    display:flex; align-items:center; justify-content: space-between;
+  }
+  .field .input.filled { border-color: var(--accent); }
+  .field .input .chk { color: var(--accent); font-weight: 700; }
+  .two-col { display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .ocr-banner {
+    display:flex; gap:10px; align-items:center;
+    background: var(--accent-soft);
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-size: 0.72rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .ocr-banner .ic {
+    width: 26px; height: 26px; border-radius: 8px;
+    background: var(--accent); color: var(--accent-ink);
+    display:grid; place-items:center; font-size: 0.8rem; flex-shrink: 0;
+  }
+
+  .screen-cta {
+    margin-top: auto;
+    padding: 14px 22px 20px;
+  }
+  .screen-cta .fake-btn {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-radius: 12px;
+    text-align: center;
+    padding: 13px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  /* ID scan mockup */
+  .doc-frame {
+    border: 2px dashed var(--accent);
+    border-radius: 14px;
+    background: var(--accent-soft);
+    height: 150px;
+    position: relative;
+    display: grid; place-items: center;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .id-card {
+    width: 78%;
+    background: var(--surface);
+    border-radius: 10px;
+    box-shadow: var(--shadow-card);
+    padding: 12px;
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: 10px;
+    align-items: center;
+  }
+  .id-card .photo { width: 42px; height: 50px; border-radius: 6px; background: linear-gradient(160deg,#cfd8d4,#aeb9b4); }
+  .id-card .lines i { display:block; height: 6px; border-radius: 3px; background: var(--line); margin-bottom: 6px; }
+  .id-card .lines i:nth-child(1){ width: 80%; background: var(--ink-faint); }
+  .id-card .lines i:nth-child(2){ width: 55%; }
+  .id-card .lines i:nth-child(3){ width: 68%; }
+  .scan-line {
+    position: absolute; left: 8%; right: 8%; height: 2px;
+    background: var(--accent);
+    top: 30%;
+    box-shadow: 0 0 12px 2px rgba(47,111,94,0.5);
+    animation: scan 2.4s ease-in-out infinite;
+  }
+  @keyframes scan { 0%,100%{ top: 20%; } 50%{ top: 78%; } }
+
+  .selfie-ring {
+    width: 118px; height: 118px; border-radius: 50%;
+    margin: 6px auto 10px;
+    background: radial-gradient(circle at 50% 38%, #d7e4df, #b9c7c1);
+    position: relative;
+    display: grid; place-items: center;
+    box-shadow: 0 0 0 4px var(--surface), 0 0 0 6px var(--accent);
+  }
+  .selfie-ring::after {
+    content: "";
+    position: absolute; inset: -6px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: var(--accent);
+    animation: spin 1.6s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .selfie-ring .face {
+    width: 54px; height: 66px;
+    background: linear-gradient(160deg,#96a8a1,#7d8f88);
+    border-radius: 50% 50% 46% 46%;
+  }
+  .live-badge {
+    display:flex; align-items:center; gap:6px; justify-content:center;
+    font-size: 0.72rem; font-weight:600; color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .live-badge .pulse { width:8px; height:8px; border-radius:50%; background: var(--accent); animation: pulse 1.4s ease infinite; }
+  @keyframes pulse { 0%,100%{ opacity:.3; transform: scale(.8);} 50%{opacity:1; transform: scale(1);} }
+
+  .check-list { list-style: none; padding: 0; margin: 4px 0 0; }
+  .check-list li {
+    display:flex; align-items:center; gap:10px;
+    font-size: 0.76rem; color: var(--ink); padding: 7px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .check-list li:last-child { border-bottom: none; }
+  .check-list .tick {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--accent); color: var(--accent-ink);
+    display:grid; place-items:center; font-size: 0.7rem; flex-shrink: 0;
+  }
+
+  /* deposit mockup */
+  .amount-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow-card);
+  }
+  .amount-card .lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); }
+  .amount-card .amt { font-size: 2rem; font-weight: 700; margin: 4px 0 2px; }
+  .amount-card .hold-tag {
+    display:inline-flex; align-items:center; gap:6px;
+    font-size: 0.68rem; font-weight: 600;
+    background: var(--accent-soft); color: var(--accent);
+    padding: 4px 10px; border-radius: 999px;
+  }
+  .pay-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 0.78rem;
+    margin-bottom: 10px;
+  }
+  .pay-card .brand {
+    width: 34px; height: 22px; border-radius: 5px;
+    background: linear-gradient(120deg, var(--accent), #1a3f86);
+    flex-shrink: 0;
+  }
+  .pay-card .num { color: var(--ink-soft); letter-spacing: 0.05em; }
+  .secure-note {
+    display:flex; align-items:center; gap:8px; justify-content:center;
+    font-size: 0.7rem; color: var(--ink-faint); margin-top: 4px;
+  }
+
+  /* ============================================================
+     FEATURE SECTIONS
+  ============================================================ */
+  .section { padding: 84px 0; }
+  .section.alt { background: var(--bg-alt); }
+
+  .feature {
+    display: grid;
+    gap: 44px;
+    align-items: center;
+  }
+  @media (min-width: 940px) {
+    .feature { grid-template-columns: 1fr 1fr; gap: 64px; }
+    .feature.reverse .feature-media { order: 2; }
+  }
+  .feature-media { display: flex; justify-content: center; }
+
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .kicker .num {
+    width: 26px; height: 26px; border-radius: 8px;
+    background: var(--accent-soft); color: var(--accent);
+    display: grid; place-items: center; font-size: 0.8rem;
+  }
+  .feature h2 { font-size: clamp(1.6rem, 3.4vw, 2.3rem); }
+  .feature-body {
+    font-size: 1.02rem;
+    color: var(--ink-soft);
+  }
+  .feature-body p { margin-bottom: 1em; }
+
+  /* styled sub-block */
+  .subblock {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+    margin-top: 22px;
+    box-shadow: var(--shadow-card);
+  }
+  .subblock .sb-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .subblock p { margin: 0; font-size: 0.94rem; color: var(--ink-soft); }
+
+  /* deposit options list */
+  .opt-list { list-style: none; padding: 0; margin: 0 0 4px; }
+  .opt-list li {
+    display: flex; gap: 12px; margin-bottom: 14px;
+    font-size: 1rem; color: var(--ink-soft);
+  }
+  .opt-list li strong { color: var(--ink); }
+  .opt-list .badge {
+    flex-shrink: 0;
+    width: 26px; height: 26px; border-radius: 8px;
+    background: var(--accent-soft); color: var(--accent);
+    display: grid; place-items: center; font-size: 0.85rem; font-weight: 700;
+    margin-top: 2px;
+  }
+
+  /* ============================================================
+     SECTION 4 — COMPLIANCE (secondary visual weight)
+  ============================================================ */
+  .compliance {
+    padding: 76px 0;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .compliance .head {
+    max-width: 640px;
+    margin: 0 auto 36px;
+    text-align: center;
+  }
+  .compliance .kicker { justify-content: center; color: var(--ink-soft); }
+  .compliance .kicker .num { background: var(--bg-alt); color: var(--ink-soft); }
+  .compliance h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+  .compliance .head p { color: var(--ink-soft); font-size: 1rem; margin: 0 auto; max-width: 60ch; }
+
+  .chips {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--ink);
+    transition: border-color .2s ease, transform .15s ease;
+  }
+  .chip:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .chip .flag { font-size: 1.15rem; line-height: 1; }
+
+  .einvoice {
+    margin-top: 30px;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 22px 24px;
+  }
+  .einvoice .sb-label {
+    display: block;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+  }
+  .einvoice p { margin: 0 0 6px; font-size: 0.94rem; color: var(--ink-soft); }
+  .einvoice .einvoice-cov {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin: 14px 0 10px;
+  }
+  .chips-sm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 0;
+  }
+  .chips-sm .chip {
+    padding: 7px 13px;
+    font-size: 0.84rem;
+    background: var(--surface);
+  }
+  .chip-more {
+    font-style: italic;
+    color: var(--ink-faint);
+  }
+
+  /* ============================================================
+     CLOSING CTA + FOOTER
+  ============================================================ */
+  .closing {
+    padding: 90px 0;
+    text-align: center;
+  }
+  .closing h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+  .closing p { color: var(--ink-soft); font-size: 1.1rem; max-width: 46ch; margin: 0 auto 28px; }
+
+  footer.site {
+    background: var(--ink);
+    color: #cfd6d3;
+    padding: 48px 0 40px;
+  }
+  footer.site .foot-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .foot-tag {
+    font-weight: 600;
+    color: #fff;
+    font-size: 1.05rem;
+    max-width: 34ch;
+    line-height: 1.35;
+  }
+  footer.site .foot-note {
+    width: 100%;
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    font-size: 0.82rem;
+    color: #8f9c97;
+    display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between;
+  }
+  footer.site a { color: #cfd6d3; text-decoration: none; }
+  footer.site a:hover { color: #fff; }
+
+  /* ============================================================
+     SCROLL REVEAL
+  ============================================================ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .7s ease, transform .7s ease;
+    will-change: opacity, transform;
+  }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .scan-line, .selfie-ring::after, .live-badge .pulse { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     HEADER  (co-brandable logo slot)
+============================================================ -->
+<header class="site">
+  <div class="nav">
+    <span class="doc-label">Product overview · The guest journey</span>
+    <nav class="nav-links" aria-label="Contents">
+      <a href="#checkin">Online Check-in</a>
+      <a href="#identity">Identity</a>
+      <a href="#deposit">Deposits</a>
+      <a href="#compliance">Compliance</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-copy reveal">
+          <span class="eyebrow">Guest experience platform</span>
+          <h1>The complete guest journey, from booking to check-out</h1>
+          <p class="subhead">Show your guests a seamless online experience. Online guest registration, identity verification, secure deposits, and compliance, all built into one check-in flow.</p>
+          <div class="trust-row">
+            <span><span class="dot" aria-hidden="true"></span> No app to download</span>
+            <span><span class="dot" aria-hidden="true"></span> Works on any phone</span>
+            <span><span class="dot" aria-hidden="true"></span> One guided flow</span>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <!-- REPLACEABLE WITH REAL SCREENSHOT: hero device shows the online check-in form -->
+          <!-- Phone mockup (a) — Online check-in form -->
+          <div class="phone" role="img" aria-label="Phone showing an online check-in form with guest details being filled in automatically from a scanned ID">
+            <div class="phone-screen">
+              <div class="screen-status">
+                <span>9:41</span>
+                <span class="sig" aria-hidden="true"><i></i><i></i><i></i> &nbsp; 5G &nbsp; 100%</span>
+              </div>
+              <div class="app-bar">
+                <span class="app-logo" aria-hidden="true">◆</span>
+                <span class="app-title">Online check-in
+                  <small>Seaside Apartment · Booking #48213</small>
+                </span>
+              </div>
+              <div class="screen-body">
+                <div class="steps" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i></div>
+                <h4>Your details</h4>
+                <p class="lead">Step 2 of 4 · Guest information</p>
+
+                <div class="ocr-banner">
+                  <span class="ic" aria-hidden="true">✽</span>
+                  <span>Scanned from your ID — details filled automatically</span>
+                </div>
+
+                <div class="field">
+                  <label>Full name</label>
+                  <div class="input filled"><span>Anna Rossi</span><span class="chk" aria-hidden="true">✓</span></div>
+                </div>
+                <div class="two-col">
+                  <div class="field">
+                    <label>Document no.</label>
+                    <div class="input filled"><span>YA •• 42</span><span class="chk" aria-hidden="true">✓</span></div>
+                  </div>
+                  <div class="field">
+                    <label>Nationality</label>
+                    <div class="input filled"><span>Italy</span><span class="chk" aria-hidden="true">✓</span></div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Email</label>
+                  <div class="input"><span style="color:var(--ink-faint)">anna.rossi@email.com</span></div>
+                </div>
+              </div>
+              <div class="screen-cta">
+                <div class="fake-btn">Continue</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 1 — ONLINE CHECK-IN
+  ============================================================ -->
+  <section class="section" id="checkin">
+    <div class="wrap">
+      <div class="feature reverse">
+        <div class="feature-media reveal">
+          <!-- REPLACEABLE WITH REAL SCREENSHOT: online check-in form -->
+          <!-- Phone mockup (a) — Online check-in form (host-status variant) -->
+          <div class="phone" role="img" aria-label="Phone showing the online check-in form with a guided multi-step flow">
+            <div class="phone-screen">
+              <div class="screen-status">
+                <span>9:41</span>
+                <span class="sig" aria-hidden="true"><i></i><i></i><i></i> &nbsp; 5G &nbsp; 100%</span>
+              </div>
+              <div class="app-bar">
+                <span class="app-logo" aria-hidden="true">◆</span>
+                <span class="app-title">Online check-in
+                  <small>Complete before you arrive</small>
+                </span>
+              </div>
+              <div class="screen-body">
+                <div class="steps" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div>
+                <h4>Welcome, Anna 👋</h4>
+                <p class="lead">Complete your check-in in a few minutes, at your own pace.</p>
+
+                <ul class="check-list">
+                  <li><span class="tick" aria-hidden="true">1</span> Add your details</li>
+                  <li><span class="tick" aria-hidden="true">2</span> Verify your identity</li>
+                  <li><span class="tick" aria-hidden="true">3</span> Confirm your deposit</li>
+                  <li><span class="tick" aria-hidden="true">4</span> Get your arrival info</li>
+                </ul>
+
+                <div class="ocr-banner" style="margin-top:16px">
+                  <span class="ic" aria-hidden="true">✽</span>
+                  <span>Scan your ID and we'll fill the form for you</span>
+                </div>
+              </div>
+              <div class="screen-cta">
+                <div class="fake-btn">Start check-in</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-copy reveal">
+          <span class="kicker"><span class="num">1</span> Online Check-in</span>
+          <h2>Check-in that happens before guests arrive</h2>
+          <div class="feature-body">
+            <p>Guests complete the whole process online, on their own phone, before they set foot on the property, with no app to download. They fill in their details, verify their identity, and handle any payment or deposit in one guided flow. You get a verified, ready-to-go reservation without the front-desk back-and-forth.</p>
+          </div>
+          <div class="subblock">
+            <span class="sb-label">How it works for the host</span>
+            <p>You send (or auto-send) the check-in link. The guest completes each step at their own pace, and you see the status of every reservation at a glance, stepping in only when something needs your attention. It's easier than ever: guest details are captured with ID OCR, which scans the document and pulls the relevant information to fill in the form automatically.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2 — IDENTITY VERIFICATION
+  ============================================================ -->
+  <section class="section alt" id="identity">
+    <div class="wrap">
+      <div class="feature">
+        <div class="feature-media reveal">
+          <!-- REPLACEABLE WITH REAL SCREENSHOT: ID scan + selfie / liveness -->
+          <!-- Phone mockup (b) — ID scan + selfie/liveness -->
+          <div class="phone" role="img" aria-label="Phone showing an ID document being scanned and a selfie with liveness detection for identity verification">
+            <div class="phone-screen">
+              <div class="screen-status">
+                <span>9:41</span>
+                <span class="sig" aria-hidden="true"><i></i><i></i><i></i> &nbsp; 5G &nbsp; 100%</span>
+              </div>
+              <div class="app-bar">
+                <span class="app-logo" aria-hidden="true">◆</span>
+                <span class="app-title">Verify your identity
+                  <small>Step 3 of 4</small>
+                </span>
+              </div>
+              <div class="screen-body">
+                <div class="steps" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+
+                <p class="lead" style="margin-bottom:8px">Scanning document…</p>
+                <div class="doc-frame">
+                  <div class="id-card" aria-hidden="true">
+                    <div class="photo"></div>
+                    <div class="lines"><i></i><i></i><i></i></div>
+                  </div>
+                  <div class="scan-line" aria-hidden="true"></div>
+                </div>
+
+                <div class="selfie-ring" aria-hidden="true"><div class="face"></div></div>
+                <div class="live-badge"><span class="pulse" aria-hidden="true"></span> Liveness detected · face matches ID</div>
+
+                <ul class="check-list">
+                  <li><span class="tick" aria-hidden="true">✓</span> Document is valid</li>
+                  <li><span class="tick" aria-hidden="true">✓</span> Photo matches the guest</li>
+                </ul>
+              </div>
+              <div class="screen-cta">
+                <div class="fake-btn">Continue</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-copy reveal">
+          <span class="kicker"><span class="num">2</span> Identity Verification</span>
+          <h2>Know who's really staying, before they arrive</h2>
+          <div class="feature-body">
+            <p>Already mandatory in some countries and always recommended everywhere. Guests scan their ID document and take a quick selfie or video with liveness detection. The system checks that the document is valid and that the person matches it, so you can trust that the guest checking in is who they claim to be. It works with passports, national IDs, and driver's licenses from around the world.</p>
+          </div>
+          <div class="subblock">
+            <span class="sb-label">Why it matters</span>
+            <p>Fewer fraudulent bookings, safer properties, and a check-in that feels modern instead of a hassle. You can even require verification to be completed before the guest can continue.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3 — SECURITY DEPOSIT
+  ============================================================ -->
+  <section class="section" id="deposit">
+    <div class="wrap">
+      <div class="feature reverse">
+        <div class="feature-media reveal">
+          <!-- REPLACEABLE WITH REAL SCREENSHOT: security deposit payment screen -->
+          <!-- Phone mockup (c) — Security deposit / pre-authorization payment -->
+          <div class="phone" role="img" aria-label="Phone showing a security deposit screen where an amount is held on the guest's card by pre-authorization">
+            <div class="phone-screen">
+              <div class="screen-status">
+                <span>9:41</span>
+                <span class="sig" aria-hidden="true"><i></i><i></i><i></i> &nbsp; 5G &nbsp; 100%</span>
+              </div>
+              <div class="app-bar">
+                <span class="app-logo" aria-hidden="true">◆</span>
+                <span class="app-title">Security deposit
+                  <small>Step 4 of 4</small>
+                </span>
+              </div>
+              <div class="screen-body">
+                <div class="steps" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+
+                <div class="amount-card">
+                  <div class="lbl">Deposit</div>
+                  <div class="amt">€250</div>
+                  <span class="hold-tag" aria-hidden="true">🔒 Held, not charged</span>
+                </div>
+
+                <p class="lead" style="margin-bottom:10px">This amount is blocked on your card and released automatically after check-out.</p>
+
+                <div class="pay-card">
+                  <span class="brand" aria-hidden="true"></span>
+                  <div>
+                    <div>Card</div>
+                    <div class="num">•••• •••• •••• 4242</div>
+                  </div>
+                </div>
+
+                <div class="secure-note">🔒 Secured &amp; encrypted payment</div>
+              </div>
+              <div class="screen-cta">
+                <div class="fake-btn">Authorize deposit</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-copy reveal">
+          <span class="kicker"><span class="num">3</span> Security Deposit</span>
+          <h2>Protect your property without charging your guests upfront</h2>
+          <div class="feature-body">
+            <p>Collect a security deposit as part of the online check-in, with no awkward cash handling or manual card requests. You choose how it works:</p>
+            <ul class="opt-list">
+              <li>
+                <span class="badge" aria-hidden="true">🔒</span>
+                <span><strong>Pre-authorization:</strong> the deposit amount is held on the guest's card but not charged. It's simply blocked until the stay is over, then released automatically. If there's damage, you decide whether to capture it.</span>
+              </li>
+              <li>
+                <span class="badge" aria-hidden="true">€</span>
+                <span><strong>Full charge:</strong> the amount is collected directly, for cases where you prefer to take payment rather than hold it.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="subblock">
+            <span class="sb-label">Why it matters</span>
+            <p>Guests feel comfortable because their money isn't actually taken, and you stay protected in case anything goes wrong. The whole thing happens inside the same check-in flow the guest is already completing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4 — LEGAL COMPLIANCE  (secondary weight)
+  ============================================================ -->
+  <section class="compliance" id="compliance">
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="kicker"><span class="num">+</span> Also included</span>
+        <h2>Built-in compliance, wherever you host</h2>
+        <p>Chekin handles guest registration and reporting to the authorities according to each country's requirements, automatically, as part of the check-in your guests already complete. Where local rules require it, guest data is submitted to the relevant authorities on your behalf, so you don't have to track changing regulations or file anything manually.</p>
+      </div>
+
+      <div class="chips reveal" role="list" aria-label="Compliance coverage by country">
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇪🇸</span> Spain</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇮🇹</span> Italy</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇵🇹</span> Portugal</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇦🇪</span> Dubai</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇦🇹</span> Austria</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇭🇷</span> Croatia</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇧🇪</span> Belgium</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇧🇬</span> Bulgaria</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇨🇴</span> Colombia</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇧🇷</span> Brazil</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇨🇿</span> Czech Republic</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇫🇷</span> France</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇩🇪</span> Germany</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇬🇷</span> Greece</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇳🇱</span> Netherlands</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇷🇴</span> Romania</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇨🇭</span> Switzerland</span>
+        <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇬🇧</span> United Kingdom</span>
+      </div>
+
+      <div class="einvoice reveal">
+        <span class="sb-label">Also available: e-invoicing</span>
+        <p>In markets where electronic invoicing is required or useful, Chekin can generate and issue compliant invoices as part of the same platform.</p>
+        <p class="einvoice-cov">Coverage includes:</p>
+        <div class="chips chips-sm" role="list" aria-label="E-invoicing coverage">
+          <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇮🇹</span> Italy</span>
+          <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇬🇷</span> Greece</span>
+          <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇵🇹</span> Portugal</span>
+          <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇪🇸</span> Spain</span>
+          <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇩🇪</span> Germany</span>
+          <span class="chip" role="listitem"><span class="flag" aria-hidden="true">🇫🇷</span> France</span>
+          <span class="chip chip-more" role="listitem">and more</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CLOSING CTA
+  ============================================================ -->
+  <section class="closing">
+    <div class="wrap reveal">
+      <h2>One flow, from booking to check-out</h2>
+      <p>Online check-in, identity verification, secure deposits, and built-in compliance — a seamless online experience for your guests, and verified, ready-to-go reservations for you.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER  (co-brandable logo slot + single CTA)
+============================================================ -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <span class="foot-tag">The complete guest journey, from booking to check-out</span>
+    </div>
+
+    <div class="foot-note">
+      <span>Guest experience &amp; property management platform</span>
+      <span>Informational overview</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* Subtle scroll reveal — progressive enhancement only.
+     Content is fully visible without JS (see .reveal fallback below). */
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function (el) { io.observe(el); });
+
+    /* current year in footer */
+    var y = document.getElementById('year');
+    if (y) { y.textContent = new Date().getFullYear(); }
+  })();
+</script>
+
+<noscript>
+  <style>.reveal{opacity:1;transform:none;}</style>
+</noscript>
+
+</body>
+</html>
