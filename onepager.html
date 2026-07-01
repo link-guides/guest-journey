@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The complete guest journey — one-pager</title>
+<meta name="description" content="A one-page overview of the online guest journey: check-in, identity verification, secure deposits and built-in compliance." />
+<style>
+  :root{
+    --accent:#2563c9; --accent-ink:#fff; --accent-soft:#e7effb; --accent-deep:#1a3f86;
+    --bg:#faf8f4; --bg-alt:#f2efe9; --surface:#fff;
+    --ink:#1f2a2e; --ink-soft:#556066; --ink-faint:#8a938f; --line:#e7e2d9;
+    --font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji",sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--font); color:var(--ink);
+    background:#e9e6df; /* screen backdrop */
+    -webkit-font-smoothing:antialiased; line-height:1.4;
+  }
+
+  /* screen-only toolbar */
+  .toolbar{
+    position:fixed; top:16px; right:16px; z-index:100; display:flex; gap:10px;
+  }
+  .toolbar button{
+    font:inherit; font-weight:600; font-size:14px; cursor:pointer;
+    background:var(--accent); color:#fff; border:0; border-radius:999px; padding:11px 20px;
+    box-shadow:0 10px 24px -12px rgba(31,42,46,.5);
+  }
+  .toolbar button:hover{background:var(--accent-deep);}
+
+  /* A4 sheet */
+  .sheet{
+    width:210mm; min-height:297mm; margin:24px auto; padding:13mm 14mm 11mm;
+    background:var(--surface); box-shadow:0 20px 60px -20px rgba(31,42,46,.4);
+    position:relative; display:flex; flex-direction:column;
+  }
+
+  h1,h2,h3,h4{margin:0; letter-spacing:-0.02em; line-height:1.12;}
+  p{margin:0;}
+
+  /* header */
+  .head{border-bottom:1px solid var(--line); padding-bottom:6mm; margin-bottom:6mm;}
+  .eyebrow{
+    display:inline-block; font-size:8pt; font-weight:700; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--accent); background:var(--accent-soft);
+    padding:3px 10px; border-radius:999px; margin-bottom:3mm;
+  }
+  .head h1{font-size:24pt; max-width:16em;}
+  .head .sub{font-size:11pt; color:var(--ink-soft); max-width:44em; margin-top:2.5mm;}
+  .logo-slot{
+    position:absolute; top:13mm; right:14mm; font-size:8pt; color:var(--ink-faint);
+    border:1px dashed var(--line); border-radius:6px; padding:6px 12px; font-weight:600;
+  }
+
+  /* features row */
+  .features{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8mm; margin-bottom:7mm;}
+  .feature{display:flex; flex-direction:column; align-items:center; text-align:center;}
+  .feat-kicker{
+    display:flex; align-items:center; gap:6px; font-size:8pt; font-weight:700;
+    letter-spacing:.05em; text-transform:uppercase; color:var(--accent); margin-bottom:3mm;
+  }
+  .feat-kicker .n{
+    width:16px; height:16px; border-radius:5px; background:var(--accent-soft); color:var(--accent);
+    display:grid; place-items:center; font-size:8pt;
+  }
+  .feature h3{font-size:11.5pt; margin:4mm 0 2mm;}
+  .feature p{font-size:8.7pt; color:var(--ink-soft);}
+
+  /* mini phone */
+  .phone{
+    width:44mm; background:#10171a; border-radius:6mm; padding:1.6mm;
+    box-shadow:0 12mm 20mm -10mm rgba(31,42,46,.5);
+  }
+  .screen{
+    background:var(--bg); border-radius:4.6mm; overflow:hidden; height:86mm;
+    display:flex; flex-direction:column;
+  }
+  .s-bar{
+    display:flex; align-items:center; gap:5px; padding:2.6mm 3mm 2mm;
+    border-bottom:1px solid var(--line);
+  }
+  .s-bar .dot{width:4mm; height:4mm; border-radius:2px; background:var(--accent); color:#fff;
+    display:grid; place-items:center; font-size:6.5pt; font-weight:700;}
+  .s-bar .t{font-size:7pt; font-weight:700; text-align:left; line-height:1.1;}
+  .s-bar .t small{display:block; font-weight:500; color:var(--ink-faint); font-size:6pt;}
+  .s-body{padding:3mm; flex:1; display:flex; flex-direction:column; gap:2mm;}
+  .prog{display:flex; gap:3px; margin-bottom:1mm;}
+  .prog i{height:3px; border-radius:2px; flex:1; background:var(--line);}
+  .prog i.on{background:var(--accent);}
+  .ocr{
+    display:flex; align-items:center; gap:4px; background:var(--accent-soft); color:var(--accent);
+    border-radius:2mm; padding:2mm; font-size:6.5pt; font-weight:600;
+  }
+  .fld{background:#fff; border:1px solid var(--line); border-radius:2mm; padding:2mm;
+    font-size:7pt; display:flex; justify-content:space-between; align-items:center;}
+  .fld.ok{border-color:var(--accent);}
+  .fld .ck{color:var(--accent); font-weight:700;}
+  .fld label{display:block; font-size:5.6pt; color:var(--ink-faint); font-weight:700;
+    text-transform:uppercase; letter-spacing:.04em; margin-bottom:1mm;}
+  .btn-fake{margin-top:auto; background:var(--accent); color:#fff; border-radius:2.4mm;
+    text-align:center; padding:2.4mm; font-size:7.5pt; font-weight:600;}
+
+  /* selfie ring */
+  .ring{width:22mm; height:22mm; border-radius:50%; margin:1mm auto 2mm;
+    background:radial-gradient(circle at 50% 38%,#d7e4df,#b9c7c1);
+    display:grid; place-items:center;
+    box-shadow:0 0 0 1mm var(--surface),0 0 0 1.4mm var(--accent);}
+  .ring .face{width:9mm; height:11mm; border-radius:50% 50% 46% 46%;
+    background:linear-gradient(160deg,#96a8a1,#7d8f88);}
+  .live{display:flex; align-items:center; justify-content:center; gap:4px;
+    font-size:6.6pt; font-weight:600; color:var(--accent); margin-bottom:1mm;}
+  .live .p{width:4px; height:4px; border-radius:50%; background:var(--accent);}
+  .chk-li{display:flex; align-items:center; gap:5px; font-size:6.8pt; color:var(--ink);
+    padding:1.4mm 0; border-bottom:1px solid var(--line);}
+  .chk-li:last-child{border-bottom:0;}
+  .chk-li .tk{width:3.6mm; height:3.6mm; border-radius:50%; background:var(--accent); color:#fff;
+    display:grid; place-items:center; font-size:6pt; flex-shrink:0;}
+
+  /* deposit */
+  .amt{background:#fff; border:1px solid var(--line); border-radius:2.6mm; text-align:center;
+    padding:3mm 2mm; }
+  .amt .l{font-size:5.6pt; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-faint);}
+  .amt .v{font-size:16pt; font-weight:800; margin:0.6mm 0;}
+  .amt .tag{display:inline-block; font-size:6pt; font-weight:600; background:var(--accent-soft);
+    color:var(--accent); padding:1mm 2mm; border-radius:999px;}
+  .pay{background:#fff; border:1px solid var(--line); border-radius:2mm; padding:2mm;
+    display:flex; align-items:center; gap:2mm; font-size:7pt;}
+  .pay .brand{width:6mm; height:4mm; border-radius:1mm;
+    background:linear-gradient(120deg,var(--accent),var(--accent-deep));}
+  .pay .num{color:var(--ink-soft); letter-spacing:.03em;}
+  .secure{text-align:center; font-size:6pt; color:var(--ink-faint);}
+
+  /* compliance strip */
+  .compliance{border:1px solid var(--line); background:var(--bg-alt); border-radius:4mm;
+    padding:6mm 7mm; margin-top:auto;}
+  .compliance .cap{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin-bottom:3.5mm;}
+  .compliance h2{font-size:14pt;}
+  .compliance .cap p{font-size:8.6pt; color:var(--ink-soft); max-width:52em;}
+  .chips{display:flex; flex-wrap:wrap; gap:4px;}
+  .chip{display:inline-flex; align-items:center; gap:5px; background:var(--surface);
+    border:1px solid var(--line); border-radius:999px; padding:3px 9px; font-size:7.6pt; font-weight:500;}
+  .chip .fl{font-size:9pt;}
+  .einv{margin-top:3.5mm; font-size:7.8pt; color:var(--accent-deep);
+    background:var(--accent-soft); border:1px solid #d4e3f7; border-radius:2.4mm; padding:2.6mm 3mm;}
+
+  /* footer */
+  .foot{display:flex; justify-content:space-between; align-items:center;
+    margin-top:5mm; padding-top:3.5mm; border-top:1px solid var(--line);
+    font-size:7.4pt; color:var(--ink-faint);}
+  .foot b{color:var(--ink-soft); font-weight:600;}
+
+  @page{ size:A4; margin:0; }
+  @media print{
+    body{background:#fff;}
+    .toolbar{display:none;}
+    .sheet{margin:0; box-shadow:none; width:auto; min-height:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button onclick="window.print()">⬇ Save as PDF / Print</button>
+</div>
+
+<div class="sheet">
+
+  <!-- LOGO SLOT — replace with partner logo <img> if co-branding -->
+  <div class="logo-slot">Logo slot</div>
+
+  <header class="head">
+    <span class="eyebrow">Guest experience platform</span>
+    <h1>The complete guest journey, from booking to check-out</h1>
+    <p class="sub">One seamless online experience: guest registration, identity verification, secure deposits and compliance — all built into a single check-in flow, on the guest's own phone, with no app to download.</p>
+  </header>
+
+  <section class="features">
+
+    <!-- Feature 1 -->
+    <div class="feature">
+      <div class="feat-kicker"><span class="n">1</span> Online check-in</div>
+      <!-- REPLACEABLE WITH REAL SCREENSHOT: online check-in form (mini) -->
+      <div class="phone">
+        <div class="screen">
+          <div class="s-bar"><span class="dot">◆</span><span class="t">Online check-in<small>Booking #48213</small></span></div>
+          <div class="s-body">
+            <div class="prog"><i class="on"></i><i class="on"></i><i></i><i></i></div>
+            <div class="ocr"><span>✽</span> Scanned from ID — autofilled</div>
+            <div class="fld ok"><div><label>Full name</label>Anna Rossi</div><span class="ck">✓</span></div>
+            <div class="fld ok"><div><label>Document</label>YA •• 42</div><span class="ck">✓</span></div>
+            <div class="fld"><div><label>Email</label><span style="color:var(--ink-faint)">anna@email.com</span></div></div>
+            <div class="btn-fake">Continue</div>
+          </div>
+        </div>
+      </div>
+      <h3>Check-in before arrival</h3>
+      <p>Guests fill in their details online, with ID OCR autofilling the form. You get a verified, ready-to-go reservation.</p>
+    </div>
+
+    <!-- Feature 2 -->
+    <div class="feature">
+      <div class="feat-kicker"><span class="n">2</span> Identity verification</div>
+      <!-- REPLACEABLE WITH REAL SCREENSHOT: ID scan + selfie/liveness (mini) -->
+      <div class="phone">
+        <div class="screen">
+          <div class="s-bar"><span class="dot">◆</span><span class="t">Verify identity<small>Step 3 of 4</small></span></div>
+          <div class="s-body">
+            <div class="prog"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+            <div class="ring"><div class="face"></div></div>
+            <div class="live"><span class="p"></span> Liveness · face matches ID</div>
+            <ul style="list-style:none; margin:0; padding:0;">
+              <li class="chk-li"><span class="tk">✓</span> Document is valid</li>
+              <li class="chk-li"><span class="tk">✓</span> Photo matches the guest</li>
+            </ul>
+            <div class="btn-fake">Continue</div>
+          </div>
+        </div>
+      </div>
+      <h3>Know who's really staying</h3>
+      <p>Guests scan their ID and take a selfie with liveness detection. The system checks the document is valid and the person matches it.</p>
+    </div>
+
+    <!-- Feature 3 -->
+    <div class="feature">
+      <div class="feat-kicker"><span class="n">3</span> Security deposit</div>
+      <!-- REPLACEABLE WITH REAL SCREENSHOT: security deposit / pre-auth (mini) -->
+      <div class="phone">
+        <div class="screen">
+          <div class="s-bar"><span class="dot">◆</span><span class="t">Security deposit<small>Step 4 of 4</small></span></div>
+          <div class="s-body">
+            <div class="prog"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+            <div class="amt"><div class="l">Deposit</div><div class="v">€250</div><span class="tag">🔒 Held, not charged</span></div>
+            <div class="pay"><span class="brand"></span><div><div>Card</div><div class="num">•••• 4242</div></div></div>
+            <div class="secure">🔒 Secured &amp; encrypted</div>
+            <div class="btn-fake">Authorize deposit</div>
+          </div>
+        </div>
+      </div>
+      <h3>Protect the property</h3>
+      <p>Collect a deposit in the same flow — pre-authorization (held, not charged) or full charge. Released automatically after the stay.</p>
+    </div>
+
+  </section>
+
+  <section class="compliance">
+    <div class="cap">
+      <h2>Built-in compliance, wherever you host</h2>
+      <p>Guest registration and reporting to the authorities is handled automatically as part of the check-in, according to each country's requirements — no manual filing.</p>
+    </div>
+    <div class="chips">
+      <span class="chip"><span class="fl">🇪🇸</span>Spain</span>
+      <span class="chip"><span class="fl">🇮🇹</span>Italy</span>
+      <span class="chip"><span class="fl">🇵🇹</span>Portugal</span>
+      <span class="chip"><span class="fl">🇦🇪</span>Dubai</span>
+      <span class="chip"><span class="fl">🇦🇹</span>Austria</span>
+      <span class="chip"><span class="fl">🇭🇷</span>Croatia</span>
+      <span class="chip"><span class="fl">🇧🇪</span>Belgium</span>
+      <span class="chip"><span class="fl">🇧🇬</span>Bulgaria</span>
+      <span class="chip"><span class="fl">🇨🇴</span>Colombia</span>
+      <span class="chip"><span class="fl">🇧🇷</span>Brazil</span>
+      <span class="chip"><span class="fl">🇨🇿</span>Czech Republic</span>
+      <span class="chip"><span class="fl">🇫🇷</span>France</span>
+      <span class="chip"><span class="fl">🇩🇪</span>Germany</span>
+      <span class="chip"><span class="fl">🇬🇷</span>Greece</span>
+      <span class="chip"><span class="fl">🇳🇱</span>Netherlands</span>
+      <span class="chip"><span class="fl">🇷🇴</span>Romania</span>
+      <span class="chip"><span class="fl">🇨🇭</span>Switzerland</span>
+      <span class="chip"><span class="fl">🇬🇧</span>United Kingdom</span>
+    </div>
+    <p class="einv"><b>Also available — e-invoicing:</b> compliant electronic invoices generated as part of the same platform, in markets where it's required or useful.</p>
+  </section>
+
+  <footer class="foot">
+    <span><b>The complete guest journey</b> — from booking to check-out</span>
+    <span>Informational overview</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
